@@ -16,4 +16,12 @@ server.get('/hobbits', async (req, res) => {
   res.status(200).json(rows);
 });
 
+server.post('/hobbits', async (req, res) => {
+  const { name } = req.body;
+  if (!name) return res.status(400).json({ error: 'Need name key' });
+  hobbits.insert({name})
+    .then(res => res.status(201).json({ res }))
+    .catch(err => res.status(500).json({ err }));
+})
+
 module.exports = server;
